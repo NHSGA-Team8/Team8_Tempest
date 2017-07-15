@@ -7,10 +7,12 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	// The axis used to take input.
 	public string inputAxis = "Horizontal";
 
+	// References to the MapManager and GameManager
 	private MapManager _mapManager;
 	private GameManager _gameManager;
 	// The value of input, updated each frame.
 	private float _inputValue;
+	private Quaternion desiredRotation;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +24,11 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 		
 	}
 
+	void FixedUpdate(){
+
+		Move ();
+	}
+
 	// Called each update to move sideways
 	void Move(){
 
@@ -29,7 +36,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	// Called to fire a projectile.
 	public void Fire(){
-
+		
 	}
 
 	// Called when a projectile damages the ship. Should call OnDeath() if it kills;
