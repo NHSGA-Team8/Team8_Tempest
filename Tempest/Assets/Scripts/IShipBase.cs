@@ -9,7 +9,7 @@ using UnityEngine;
 	void Fire();
 
 	// Called when a projectile damages the ship. Should call OnDeath() if it kills;
-	int TakeDamage(int dmg);
+	void TakeDamage(int dmg);
 
 	// Called when the ship dies. Add points, do game state detection, etc.
 	void OnDeath();

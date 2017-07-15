@@ -16,14 +16,41 @@ public class MapLine {
 		startPos = startpos;
 		endPos = endpos;
 	}
+		
+	// Return the length of the ship
+	public float GetLength()
+	{
+		return (endPos - startPos).magnitude;
+	}
 
-	// Use this for initialization
-	void Start () {
-		
+	// Return the vector of the line
+	public Vector3 GetDirectionVector()
+	{
+		return (endPos - startPos);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	// Return a normalized vector of the line.
+	public Vector3 GetNormalizedVector()
+	{
+		return (endPos - startPos).normalized;
 	}
+
+	// Override the MapLine.Equals function
+	public override bool Equals(object o)
+	{
+		if (o is MapLine)
+			return Equals((MapLine)o);
+		else
+			return base.Equals(o);
+	}
+
+	// Used to compare another MapLine with this one
+	public bool Equals(MapLine otherMapLine){
+		if (otherMapLine.startPos == startPos && otherMapLine.endPos == endPos)
+			return true;
+		else
+			return false;
+	}
+
+
 }
