@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour {
 
-	public bool isPlayer;
+	private GameObject ship;
 
 	void Start() {
 		
@@ -12,5 +12,13 @@ public class BaseBullet : MonoBehaviour {
 
 	void Explode() {
 
+	}
+
+	public void SetShip(GameObject newShip) {
+		ship = newShip;
+	}
+
+	void OnDestroy() {
+		ship.GetComponent<PlayerShip>().BulletDestroyed ();
 	}
 }

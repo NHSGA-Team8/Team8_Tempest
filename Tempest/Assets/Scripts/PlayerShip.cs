@@ -6,22 +6,32 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	// The axis used to take input.
 	public string inputAxis = "Horizontal";
+	public Rigidbody bullet;
+	public Transform fireTransform;
+	public int maxBullets = 7;
+	public float fireCooldown = 0.1f;
 
 	// References to the MapManager and GameManager
 	private MapManager _mapManager;
 	private GameManager _gameManager;
 	// The value of input, updated each frame.
 	private float _inputValue;
-	private Quaternion desiredRotation;
+	private Quaternion _desiredRotation;
+	private int _curBullets;
+	private int _lastFire;
 
 	// Use this for initialization
 	void Start () {
-		
+		_curBullets = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+
+		}
 	}
 
 	void FixedUpdate(){
@@ -36,7 +46,11 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	// Called to fire a projectile.
 	public void Fire(){
-		
+		_curBullets++;
+
+		Rigidbody shellInstance = Instantiate (bullet, fireTransform.position + new Vector3 (0f, -0.5f, 0f), fireTransform.rotation) as Rigidbody;
+		shellInstance.GetComponent<PlayerBullet> ().SetShip (gameObject);
+		shellInstance.velocity = 10f * (fireTransform.forward); 
 	}
 
 	// Called when a projectile damages the ship. Should call OnDeath() if it kills;
@@ -48,5 +62,9 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	// Called when the ship dies. Add points, do game state detection, etc.
 	public void OnDeath(){
 
+	}
+
+	public void BulletDestroyed() {
+		_curBullets--;
 	}
 }
