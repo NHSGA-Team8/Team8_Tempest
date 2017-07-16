@@ -33,7 +33,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	}
 
 	// Called when a projectile damages the ship. Should call OnDeath() if it kills;
-	public int TakeDamage(int dmg){
+	public void TakeDamage(int dmg){
 		// Since the player is dead on touch, just destroy it
 		OnDeath();
 	}

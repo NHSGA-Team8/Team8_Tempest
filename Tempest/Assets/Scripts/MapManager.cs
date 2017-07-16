@@ -28,11 +28,12 @@ public class MapManager : MonoBehaviour {
 		
 	}
 
-	/*
-	GetVerticeNormal(Vector3 pos)
-	Purpose: Return the normal rotation of two vertices;
-	Variables: pos - a point on the line
-	*/
+	// Create stuff that forms the map
+	public void CreateOutline(){
+
+	}
+
+	// return the normal vector of the line and the pos
 	public Quaternion GetVerticeNormal(Vector3 pos){
 
 		Quaternion finalQuat = Quaternion.Euler(0f,0f,0f);
