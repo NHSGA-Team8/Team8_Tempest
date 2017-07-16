@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: ae07569cf4ba36946b90fbb3b22aaaf4
-timeCreated: 1500197737
+guid: f67fb9b1eabfcde4e93e4552737bd77c
+timeCreated: 1500205317
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Tanker
+    4300000: Spaceship
     9500000: //RootNode
   materials:
     importMaterials: 1
