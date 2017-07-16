@@ -52,5 +52,14 @@ public class MapLine {
 			return false;
 	}
 
+	// Without GetHashCode() Unity will complain about not having one
+	// Have it your way scumbag
+	public override int GetHashCode(){
+		int hash = 17;
+		hash = hash * 23 + startPos.magnitude.GetHashCode ();
+		hash = hash * 23 + endPos.magnitude.GetHashCode ();
+		return hash;
+	}	
+
 
 }
