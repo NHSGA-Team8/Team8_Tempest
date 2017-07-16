@@ -18,8 +18,9 @@ public class Flipper : MonoBehaviour, IShipBase
 	private float _currentHealth;
 	private bool _straightMovement; //True if moving in only one lane for level one
 	private bool _reloaded;
-	private MapManager _mapManager;
+	private MapManager _mapManager; //How do I use the same _mapManager as that of the player ship if it's private?
 	private GameManager _gameManager;
+	private float rand;
 
 	Rigidbody rb;
 	AudioSource flipperSounds;
@@ -31,6 +32,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	{
 		rb = GetComponent<Rigidbody> ();
 		_reloaded = true;
+		rand = Random.value * _mapManager.mapVertices.Length;
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
