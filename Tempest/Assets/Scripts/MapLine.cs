@@ -14,25 +14,47 @@ public class MapLine {
 	public MapLine leftLine;
 	public MapLine rightLine;
 
+	// The direction vector
+	private Vector3 _dir;
+
 	// Initializaiton code for MapLine
 	public MapLine(Vector3 startpos, Vector3 endpos){
 		startPos = startpos;
 		endPos = endpos;
+		_dir = GetDirectionVector ();
 	}
 	public MapLine(Vector3 startpos, Vector3 endpos, MapLine left, MapLine right){
 		startPos = startpos;
 		endPos = endpos;
 		leftLine = left;
 		rightLine = right;
+		_dir = GetDirectionVector ();
 	}
 
-	public MapLine UpdateMovement(Vector3 curPos, float relativeMovement, out Vector3 newMovement, out Quaternion newRotation)
+	// Called by ships to get information on what the actual movement should be
+	public MapLine UpdateMovement(Vector3 curPos, float relativeMovement, out Vector3 newPos, out Quaternion newRotation)
 	{
+		// TODO Get the Vector3 normal that represents the direction in which the movement is
 
+		// TODO Multiply normal by relativeMovement, adding onto curPos to get newPos
+
+		// TODO Check if this new position is out of bounds; if so, get the next MapLine
+
+		// TODO If we have a new MapLine, get newRotation
+
+		// TODO assign the newMovement and newRotation (if new MapLine)
+
+		// TODO return null, or a new MapLine if out of bounds
 
 		return null;
 	}
 
+
+	// Return whether a Vector3 point is on this MapLine.
+	public bool IsOnLine(Vector3 pos){
+		// TODO check pos
+
+	}
 
 	// Return the length of the ship
 	public float GetLength()
@@ -40,14 +62,14 @@ public class MapLine {
 		return (endPos - startPos).magnitude;
 	}
 
-	// Return the vector of the line
+	// Return the direction vector of the line
 	public Vector3 GetDirectionVector()
 	{
 		return (endPos - startPos);
 	}
 
 	// Return a normalized vector of the line.
-	public Vector3 GetNormalizedVector()
+	public Vector3 GetNormalVector()
 	{
 		return (endPos - startPos).normalized;
 	}
