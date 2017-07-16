@@ -5,34 +5,51 @@ using UnityEngine;
 /*
  * Created by Rachael H. on 16 July 2017
  */
-public class Flipper : IShipBase {
-
+public class Flipper : MonoBehaviour, IShipBase
+{
+	//Public
+	public float movementForce;
 	public float shellSpeed;
 	public float reloadTime;
-	private float _currentHealth;
 	public int levelNum;
-	public bool straightMovement; //True if moving in only one lane for level one
+	public GameObject flipperShell;
 
-	public GameObject shell;
+	//Private
+	private float _currentHealth;
+	private bool _straightMovement; //True if moving in only one lane for level one
+	private bool _reloaded;
+	private MapManager _mapManager;
+	private GameManager _gameManager;
+
 	Rigidbody rb;
 	AudioSource flipperSounds;
 	AudioClip flipperShooting;
 	AudioClip flipperExplosion;
 
-	private MapManager _mapManager;
-	private GameManager _gameManager;
-
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		rb = GetComponent<Rigidbody> ();
-		if (levelNum == 1) {
-			straightMovement = true;
+		_reloaded = true;
+		if (levelNum == 1)
+		{
+			_straightMovement = true;
+		}
+		else
+		{
+			_straightMovement = false;
 		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (straightMovement) {
+		if (_straightMovement)
+		{
+			rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
+			rb.AddForce (movementForce * transform.forward * Time.deltaTime);
+		}
+		else
+		{
 			
 		}
 	}
@@ -40,6 +57,8 @@ public class Flipper : IShipBase {
 	// Called to fire a projectile.
 	public void Fire()
 	{
+		GameObject newFlipperShell = Instantiate (flipperShell);
+		newFlipperShell.GetComponent<Rigidbody> ().AddForce (shellSpeed * transform.forward * Time.deltaTime);
 	}
 
 	// Called when a projectile damages the ship. Should call OnDeath() if it kills;
@@ -51,5 +70,8 @@ public class Flipper : IShipBase {
 	// Called when the ship dies. Add points, do game state detection, etc.
 	public void OnDeath()
 	{
+		gameObject.SetActive (false);
 	}
+
+	//public void Transistion()
 }
