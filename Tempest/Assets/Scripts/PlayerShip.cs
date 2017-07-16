@@ -9,7 +9,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	public Rigidbody bullet;
 	public Transform fireTransform;
 	public int maxBullets = 7;
-	public float fireCooldown = 0.1f;
+	public float fireCooldown = 0.2f;
 
 	// References to the MapManager and GameManager
 	private MapManager _mapManager;
@@ -18,7 +18,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	private float _inputValue;
 	private Quaternion _desiredRotation;
 	private int _curBullets;
-	private int _lastFire;
+	private float _lastFire;
 
 	// Use this for initialization
 	void Start () {
@@ -28,15 +28,16 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	// Update is called once per frame
 	void Update () {
 
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
-
-		}
 	}
 
 	void FixedUpdate(){
 
 		Move ();
+
+		if (Input.GetKey (KeyCode.Space) && _lastFire + fireCooldown < Time.fixedTime && _curBullets < maxBullets) {
+			Fire ();
+			_lastFire = Time.fixedTime;
+		}
 	}
 
 	// Called each update to move sideways
@@ -48,7 +49,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	public void Fire(){
 		_curBullets++;
 
-		Rigidbody shellInstance = Instantiate (bullet, fireTransform.position + new Vector3 (0f, -0.5f, 0f), fireTransform.rotation) as Rigidbody;
+		Rigidbody shellInstance = Instantiate (bullet, fireTransform.position, fireTransform.rotation) as Rigidbody;
 		shellInstance.GetComponent<PlayerBullet> ().SetShip (gameObject);
 		shellInstance.velocity = 10f * (fireTransform.forward); 
 	}

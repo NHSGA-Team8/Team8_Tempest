@@ -11,12 +11,29 @@ public class MapLine {
 	// The ending vertice (right hand side) of the line
 	public Vector3 endPos;
 
+	public MapLine leftLine;
+	public MapLine rightLine;
+
 	// Initializaiton code for MapLine
 	public MapLine(Vector3 startpos, Vector3 endpos){
 		startPos = startpos;
 		endPos = endpos;
 	}
-		
+	public MapLine(Vector3 startpos, Vector3 endpos, MapLine left, MapLine right){
+		startPos = startpos;
+		endPos = endpos;
+		leftLine = left;
+		rightLine = right;
+	}
+
+	public MapLine UpdateMovement(Vector3 curPos, float relativeMovement, out Vector3 newMovement, out Quaternion newRotation)
+	{
+
+
+		return null;
+	}
+
+
 	// Return the length of the ship
 	public float GetLength()
 	{
@@ -33,6 +50,15 @@ public class MapLine {
 	public Vector3 GetNormalizedVector()
 	{
 		return (endPos - startPos).normalized;
+	}
+
+	// Sets the MapLine references
+	public void SetLeftMapLine(MapLine mapLine) {
+		leftLine = mapLine;
+	}
+
+	public void SetRightMapLine(MapLine mapLine) {
+		rightLine = mapLine;
 	}
 
 	// Override the MapLine.Equals function
