@@ -35,27 +35,42 @@ public class MapLine {
 	}
 
 	// Called by ships to get information on what the actual movement should be
-	public MapLine UpdateMovement(Vector3 curPos, float relativeMovement, out Vector3 newPos) // , out Quaternion newRotation
+	public MapLine UpdateMovement(Vector3 curPos, float relativeMovement, out Vector3 newPos, out MapLine newMapLine) // , out Quaternion newRotation
 	{
-		MapLine newMapLine = null;
+
+		newMapLine = null;
+
+
  		// Get the Vector3 normal that represents the direction in which the movement is
 		// Multiply normal by relativeMovement, adding onto curPos to get newPos
 		newPos = curPos + _dir.normalized * relativeMovement;
 
 		// If either distance is longer than the length, then it means that curPos is out of bounds
 		if (Vector3.Distance(startPos, curPos) > _length || Vector3.Distance(endPos, curPos) > _length) {
+
+			// Prevent errors at the edges (when the MapLine is null)
+			if (Vector3.Distance (startPos, curPos) > _length && rightLine == null || Vector3.Distance (endPos, curPos) > _length && leftLine == null) {
+				newPos = curPos;
+				return null;
+			}
+
 			// Length from start to cur longer means that the point is to the right
 			if (Vector3.Distance (startPos, curPos) > _length) {
 				float tempDist = Vector3.Distance (endPos, curPos);
 				newMapLine = rightLine;
 				// Start from the end of the line, and continue the rest of the distance on the next line
-				newPos = endPos + rightLine.GetDirectionVector() * (relativeMovement - tempDist);
+				if (rightLine != null) 
+					newPos = endPos + rightLine.GetDirectionVector() * (relativeMovement - tempDist - 0.01f);
+				
+
 			// Otherwise it is to the left
 			} else {
 				float tempDist = Vector3.Distance (startPos, curPos);
 				newMapLine = leftLine;
 				// Start from the end of the line, and continue the rest of the distance on the next line
-				newPos = startPos + leftLine.GetDirectionVector() * (relativeMovement - tempDist);
+				if (leftLine != null) 
+					newPos = startPos + leftLine.GetDirectionVector() * (relativeMovement - tempDist - 0.01f);
+				// TODO Prevent errors at the leftmost line (when the MapLine is null)
 			}
 
 			

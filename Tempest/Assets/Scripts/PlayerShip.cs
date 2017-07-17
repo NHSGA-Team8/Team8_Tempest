@@ -6,6 +6,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	// The axis used to take input.
 	public string inputAxis = "Horizontal";
+	public float moveSpeed = 5f;
 	public Rigidbody bullet;
 	public Transform fireTransform;
 	public int maxBullets = 7;
@@ -38,6 +39,10 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 		_inputValue = Input.GetAxis (inputAxis);
 
+		if (curMapLine == null) {
+			curMapLine = _mapManager.mapLines [2];
+		}
+
 		Move ();
 
 		if (Input.GetKey (KeyCode.Space) && _lastFire + fireCooldown < Time.fixedTime && _curBullets < maxBullets) {
@@ -49,10 +54,15 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	// Called each update to move sideways
 	void Move(){
 		Vector3 newPos;
+		MapLine newMapLine;
 
-		MapLine newMapLine = curMapLine.UpdateMovement (transform.position, Time.deltaTime * _inputValue, out newPos);
+		curMapLine.UpdateMovement (transform.position, Time.deltaTime * _inputValue * moveSpeed, out newPos, out newMapLine);
 
 		_rigidbody.MovePosition (newPos);
+
+		if (newMapLine != null) {
+			curMapLine = newMapLine;
+		}
 	}
 
 	// Called to fire a projectile.
