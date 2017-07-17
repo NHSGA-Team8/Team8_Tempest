@@ -68,12 +68,15 @@ public class GameManager : MonoBehaviour {
 
 	private IEnumerator RoundStarting() {
 		SpawnPlayerShip ();
+		StartCoroutine (SpawnEnemyShips());
 
 		yield return new WaitForSeconds(3);
 		_startTime = Time.fixedTime;
 	}
 
 	private IEnumerator RoundPlaying() {
+
+
 
 		while (curLives >= 0 || roundTotalTime > Time.fixedTime - _startTime)
 			yield return null;
@@ -87,23 +90,28 @@ public class GameManager : MonoBehaviour {
 		if (_playerRef == null) {
 			_playerRef = Instantiate (playerPrefab, _mapManager.mapLines [_mapManager.startMapLineIndex].GetMidPoint (), Quaternion.Euler (0f, 0f, 0f));
 		} else {
-			_playerRef.SetActive (true);
 			_playerRef.transform.position = _mapManager.mapLines [_mapManager.startMapLineIndex].GetMidPoint ();
+			_playerRef.SetActive (true);
 		}
 		GameObject spawnSparkles = Instantiate (spawnEffect, _playerRef.transform);
 		Destroy (spawnSparkles, 5f);
 	}
 
+	public void OnPlayerDeath()
+	{
+		StartCoroutine (PlayerDied ());
+	}
+
 	public IEnumerator PlayerDied() {
 		curLives--;
-		yield return new WaitForSeconds(3);
+		yield return new WaitForSeconds(2);
 		SpawnPlayerShip ();
 
 	}
 
-	private IEnumerator Spawn ()
+	private IEnumerator SpawnEnemyShips ()
 	{
-		for (float f = 1f; f >= 0; f -= 0.1f)
+		for (int i = 0; i < totalFlippers; i++)
 		{
 			CreateNew ();
 			yield return new WaitForSeconds (spawnDelay);
@@ -117,6 +125,7 @@ public class GameManager : MonoBehaviour {
 	//Spawns new flipper enemy on field, associated with map line
 	public void CreateNew()
 	{
+		//print ("CreateNew");
 		//float _rand1;
 		int _rand1;
 		bool _straightMovement1;
@@ -133,10 +142,7 @@ public class GameManager : MonoBehaviour {
 		}
 		_rand1 = RandomVal ();
 		thisMapLine = _mapManager.mapLines [_rand1];
-		_vertex1 = thisMapLine.startPos;
-		_vertex2 = thisMapLine.endPos;
-		_lineCenter = (_vertex1 + _vertex2) / 2;
 		_mapDepth = _mapManager.depth;
-		GameObject newFlipper = Instantiate (flipperPrefab, _lineCenter + new Vector3 (0, 0, 1 * _mapDepth), flipperPrefab.GetComponent<Rigidbody> ().rotation);
+		GameObject newFlipper = Instantiate (flipperPrefab, thisMapLine.GetMidPoint() + new Vector3 (0, 0, 1 * _mapDepth), flipperPrefab.transform.rotation);
 	}
 }
