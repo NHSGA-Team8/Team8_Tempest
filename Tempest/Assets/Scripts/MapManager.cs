@@ -21,6 +21,8 @@ public class MapManager : MonoBehaviour {
 	//public MapLine[] mapLines;
 	public int linesNum;
 
+	private float _depth;
+
 	// Use this for initialization
 	void Start () {
 		mapLines = new MapLine[mapVertices.Length - 1];
@@ -61,5 +63,10 @@ public class MapManager : MonoBehaviour {
 
 		// Return the Quaternion
 		return finalQuat;
+	}
+
+	public float getDepth()
+	{
+		return _depth;
 	}
 }
