@@ -7,7 +7,7 @@ public class BaseBullet : MonoBehaviour {
 	private GameObject ship;
 
 	void Start() {
-		
+		Destroy (gameObject, 2f);
 	}
 
 	void Explode() {

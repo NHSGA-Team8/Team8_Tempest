@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBullet : BaseBullet {
+public class PlayerBullet : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	private GameObject ship;
+
+	void Start() {
+		Destroy (gameObject, 2f);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void Explode() {
+
 	}
+
+	public void SetShip(GameObject newShip) {
+		ship = newShip;
+	}
+
+	void OnDestroy() {
+		ship.GetComponent<PlayerShip>().BulletDestroyed ();
+	}
+
 }

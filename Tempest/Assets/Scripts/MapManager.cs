@@ -20,6 +20,15 @@ public class MapManager : MonoBehaviour {
 		mapLines = new MapLine[mapVertices.Length - 1];
 		for (int i = 0; i < mapLines.Length; i++) {
 			mapLines [i] = new MapLine (mapVertices[i], mapVertices[i+1]);
+			if (i>0) 
+				mapLines [i].SetLeftMapLine (mapLines [i - 1]);
+			if (i<mapLines.Length - 1)
+				mapLines [i].SetRightMapLine (mapLines [i + 1]);
+
+		}
+		if (isLoop == true) {
+			mapLines [0].SetLeftMapLine (mapLines [mapLines.Length - 1]);
+			mapLines [mapLines.Length - 1].SetRightMapLine (mapLines [0]);
 		}
 	}
 	
@@ -27,7 +36,7 @@ public class MapManager : MonoBehaviour {
 	void Update () {
 		
 	}
-
+		
 	// Create stuff that forms the map
 	public void CreateOutline(){
 
