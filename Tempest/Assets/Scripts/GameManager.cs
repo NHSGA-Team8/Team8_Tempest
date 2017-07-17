@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/*
+ * Ethan Zhu and Rachael H.
+ */
 public class GameManager : MonoBehaviour {
 
 	public GameObject playerPrefab;
@@ -14,6 +17,8 @@ public class GameManager : MonoBehaviour {
 	public int currentRound;
 	public int nextScene;
 	public int totalLives;
+
+	public GameObject flipperShell; //Enemy Projectile
 
 	public enum GAMESTATE {PREGAME, STARTING, PLAYING, ENDING};
 	public GAMESTATE curGamestate = GAMESTATE.PREGAME;
@@ -96,4 +101,42 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+	private IEnumerator Spawn ()
+	{
+		for (float f = 1f; f >= 0; f -= 0.1f)
+		{
+			CreateNew ();
+			yield return new WaitForSeconds (spawnDelay);
+		}
+	}
+	//Random spawn point
+	public int RandomVal()
+	{
+		return (int)(Random.value * (_mapManager.mapLines.Length - 1));
+	}
+	//Spawns new flipper enemy on field, associated with map line
+	public void CreateNew()
+	{
+		//float _rand1;
+		int _rand1;
+		bool _straightMovement1;
+		MapLine thisMapLine;
+		Vector3 _vertex1, _vertex2, _lineCenter;
+		float _mapDepth;
+		if (currentRound == 1)
+		{
+			_straightMovement1 = true;
+		}
+		else
+		{
+			_straightMovement1 = false;
+		}
+		_rand1 = RandomVal ();
+		thisMapLine = _mapManager.mapLines [_rand1];
+		_vertex1 = thisMapLine.startPos;
+		_vertex2 = thisMapLine.endPos;
+		_lineCenter = (_vertex1 + _vertex2) / 2;
+		_mapDepth = _mapManager.depth;
+		GameObject newFlipper = Instantiate (flipperPrefab, _lineCenter + new Vector3 (0, 0, 1 * _mapDepth), flipperPrefab.GetComponent<Rigidbody> ().rotation);
+	}
 }
