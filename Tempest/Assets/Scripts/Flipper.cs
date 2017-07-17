@@ -16,6 +16,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	public GameObject player;
 	public GameObject flipperEnemy;
 	public float respawnTime;
+	public MapLine thisMapLine;
 
 	//Private
 	private float _currentHealth;
@@ -40,12 +41,10 @@ public class Flipper : MonoBehaviour, IShipBase
 	{
 		rb = GetComponent<Rigidbody> ();
 		_reloaded = true;
-<<<<<<< HEAD
 		respawnTime = 0.2f;
-=======
-<<<<<<< HEAD
-		rand = Random.value * _mapManager.mapVertices.Length;
-		print(Console.WriteLine(MapManager.mapVertices[1]));
+		//_rand = Random.value * _mapManager.mapVertices.Length;
+		_rand = random ();
+		//print(Console.WriteLine(MapManager.mapVertices[1]));
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
@@ -54,9 +53,6 @@ public class Flipper : MonoBehaviour, IShipBase
 		{
 			_straightMovement = false;
 		}
-=======
->>>>>>> 46bf56647bc50bc831d6cb442e087bb7903e842f
->>>>>>> 98a6a7b9091ebe31ea216327489607b750b3a23e
 	}
 
 	// Update is called once per frame
@@ -118,6 +114,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	}
 	public void createNew()
 	{
+		float _rand1;
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
@@ -126,11 +123,15 @@ public class Flipper : MonoBehaviour, IShipBase
 		{
 			_straightMovement = false;
 		}
-		_rand = random ();
-		_vertex1 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand];
-		_vertex2 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand + 1];
+		_rand1 = random ();
+		//_vertex1 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand];
+		//_vertex2 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand + 1];
+		thisMapLine = player.GetComponent<PlayerShip> ().getMapManager ().mapLines [_rand1];
+		_vertex1 = thisMapLine.startPos;
+		_vertex2 = thisMapLine.endPos;
 		_lineCenter = (_vertex1 + _vertex2) / 2;
-		_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().getDepth ();
+		//_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().getDepth ();
+		_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().depth;
 		//GameObject newFlipper = Instantiate (flipperEnemy, new Vector3 (_lineCenter.x, _lineCenter.y, _lineCenter.z - _mapDepth));
 		GameObject newFlipper = Instantiate (flipperEnemy, _lineCenter + new Vector3 (0, 0, -1 * _mapDepth));
 	}
