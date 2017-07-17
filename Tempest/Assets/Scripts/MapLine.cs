@@ -49,8 +49,11 @@ public class MapLine {
 		if (Vector3.Distance(startPos, curPos) > _length || Vector3.Distance(endPos, curPos) > _length) {
 
 			// Prevent errors at the edges (when the MapLine is null)
-			if (Vector3.Distance (startPos, curPos) > _length && rightLine == null || Vector3.Distance (endPos, curPos) > _length && leftLine == null) {
-				newPos = curPos;
+			if (Vector3.Distance (startPos, curPos) > _length && rightLine == null) {
+				newPos = curPos + _dir.normalized * -0.005f;
+				return null;
+			} else if (Vector3.Distance (endPos, curPos) > _length && leftLine == null) {
+				newPos = curPos + _dir.normalized * +0.005f;
 				return null;
 			}
 
