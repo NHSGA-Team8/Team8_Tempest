@@ -86,7 +86,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	// Called when the ship dies. Add points, do game state detection, etc.
 	public void OnDeath(){
-
+		gameObject.SetActive (false);
 	}
 
 	public void BulletDestroyed() {
