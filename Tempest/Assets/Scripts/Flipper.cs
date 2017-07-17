@@ -72,7 +72,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		for (float f = 1f; f >= 0; f -= 0.1f)
 		{
 			createNew ();
-			yield return new WaitForSeconds (respawnTime);
+			//yield return new WaitForSeconds (respawnTime);
 		}
 	}
 
@@ -106,7 +106,9 @@ public class Flipper : MonoBehaviour, IShipBase
 		//# of mapLines = # of mapVertices - 1
 		//Subtract another 1 to be able to access rand + 1
 		//rand = Random.value * (ship.GetComponent<PlayerShip>.getMapManager().mapVertices.Length - 1);
-		return Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapVertices.Length - 2);
+
+		//return Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapVertices.Length - 2);
+		return 0.0f;
 	}
 
 	public void onTriggerEnter2D()
@@ -114,6 +116,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	}
 	public void createNew()
 	{
+		/*
 		float _rand1;
 		if (levelNum == 1)
 		{
@@ -134,5 +137,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().depth;
 		//GameObject newFlipper = Instantiate (flipperEnemy, new Vector3 (_lineCenter.x, _lineCenter.y, _lineCenter.z - _mapDepth));
 		GameObject newFlipper = Instantiate (flipperEnemy, _lineCenter + new Vector3 (0, 0, -1 * _mapDepth));
+		*/
 	}
+
 }
