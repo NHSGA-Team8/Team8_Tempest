@@ -107,6 +107,10 @@ public class MapLine {
 		return (endPos - startPos);
 	}
 
+	public Vector3 GetMidPoint() {
+		return startPos + (endPos - startPos) / 2;
+	}
+
 	// Sets the MapLine references
 	public void SetLeftMapLine(MapLine mapLine) {
 		leftLine = mapLine;
