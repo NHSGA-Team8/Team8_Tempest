@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Ethan Zhu and Rachael H.
+ */
 public class MapManager : MonoBehaviour {
 
 	// Vertices of a map, from left to right
@@ -14,6 +17,7 @@ public class MapManager : MonoBehaviour {
 
 	// MapLines are generated at Start(), and they represent a line in the map.
 	private MapLine[] mapLines;
+	//public MapLine[] mapLines;
 
 	// Use this for initialization
 	void Start () {

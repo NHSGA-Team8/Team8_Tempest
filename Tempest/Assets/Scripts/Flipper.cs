@@ -33,6 +33,10 @@ public class Flipper : MonoBehaviour, IShipBase
 		rb = GetComponent<Rigidbody> ();
 		_reloaded = true;
 		rand = Random.value * _mapManager.mapVertices.Length;
+		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShip>
+		//rand = Random.value * (PlayerShip.getMapManager().mapVertices.Length - 2);
+		//# of mapLines = # of mapVertices - 1
+		//Subtract another 1 to be able to access rand + 1
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
