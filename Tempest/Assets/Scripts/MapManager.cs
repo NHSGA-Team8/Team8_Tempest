@@ -10,6 +10,7 @@ public class MapManager : MonoBehaviour {
 	// Vertices of a map, from left to right
 	// The Z axis does not matter; all ships / enemies have a set value of that
 	public Vector3[] mapVertices; 
+	public int verticesNum;
 
 	// Whether the map loops on the two edges.
 	// This should be true for complete shapes (like a O shape) and false for incomplete shapes (like a U shape)
@@ -18,6 +19,7 @@ public class MapManager : MonoBehaviour {
 	// MapLines are generated at Start(), and they represent a line in the map.
 	private MapLine[] mapLines;
 	//public MapLine[] mapLines;
+	public int linesNum;
 
 	// Use this for initialization
 	void Start () {
@@ -59,6 +61,5 @@ public class MapManager : MonoBehaviour {
 
 		// Return the Quaternion
 		return finalQuat;
-
 	}
 }

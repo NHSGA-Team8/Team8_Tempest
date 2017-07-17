@@ -23,6 +23,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	private float rand;
 
 	Rigidbody rb;
+	//Audio
 	AudioSource flipperSounds;
 	AudioClip flipperShooting;
 	AudioClip flipperExplosion;
@@ -32,11 +33,6 @@ public class Flipper : MonoBehaviour, IShipBase
 	{
 		rb = GetComponent<Rigidbody> ();
 		_reloaded = true;
-		rand = Random.value * _mapManager.mapVertices.Length;
-		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShip>
-		//rand = Random.value * (PlayerShip.getMapManager().mapVertices.Length - 2);
-		//# of mapLines = # of mapVertices - 1
-		//Subtract another 1 to be able to access rand + 1
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
@@ -51,12 +47,14 @@ public class Flipper : MonoBehaviour, IShipBase
 	void Update () {
 		if (_straightMovement)
 		{
+			//Only move in Z direction, aka depth
 			rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
 			rb.AddForce (movementForce * transform.forward * Time.deltaTime);
 		}
 		else
 		{
-			
+			//Move forward by one or a few pixels
+			//While moving to next section of map
 		}
 	}
 
@@ -76,8 +74,18 @@ public class Flipper : MonoBehaviour, IShipBase
 	// Called when the ship dies. Add points, do game state detection, etc.
 	public void OnDeath()
 	{
-		gameObject.SetActive (false);
+		gameObject.SetActive (false); // Disable enemy
 	}
 
 	//public void Transistion()
+
+	public float random(GameObject ship)
+	{
+		//rand = Random.value * _mapManager.mapVertices.Length;
+		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShip>
+		//rand = Random.value * (PlayerShip.getMapManager().mapVertices.Length - 2);
+		//# of mapLines = # of mapVertices - 1
+		//Subtract another 1 to be able to access rand + 1
+		//rand = Random.value * (ship.GetComponent<PlayerShip>.getMapManager().mapVertices.Length - 1);
+	}
 }
