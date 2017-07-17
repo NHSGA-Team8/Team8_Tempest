@@ -56,7 +56,6 @@ public class MapLine {
 	// Return whether a Vector3 point is on this MapLine.
 	public bool IsOnLine(Vector3 pos){
 		// TODO check pos
-
 	}
 
 	// Return the length of the ship
