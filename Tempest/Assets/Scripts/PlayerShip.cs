@@ -58,6 +58,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	void Move(){
 		Vector3 newPos;
 		MapLine newMapLine;
+		Quaternion newQuat;
 
 		curMapLine.UpdateMovement (transform.position, Time.deltaTime * _inputValue * moveSpeed, out newPos, out newMapLine);
 

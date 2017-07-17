@@ -63,7 +63,7 @@ public class MapLine {
 				newMapLine = rightLine;
 				// Start from the end of the line, and continue the rest of the distance on the next line
 				if (rightLine != null) 
-					newPos = endPos + rightLine.GetDirectionVector() * (relativeMovement - tempDist - 0.01f);
+					newPos = endPos + rightLine.GetDirectionVector() * (relativeMovement - tempDist); //  - 0.01f
 				
 
 			// Otherwise it is to the left
@@ -72,7 +72,7 @@ public class MapLine {
 				newMapLine = leftLine;
 				// Start from the end of the line, and continue the rest of the distance on the next line
 				if (leftLine != null) 
-					newPos = startPos + leftLine.GetDirectionVector() * (relativeMovement - tempDist - 0.01f);
+					newPos = startPos + leftLine.GetDirectionVector() * (relativeMovement - tempDist); //  - 0.01f
 				// TODO Prevent errors at the leftmost line (when the MapLine is null)
 			}
 
