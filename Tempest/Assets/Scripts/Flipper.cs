@@ -117,7 +117,8 @@ public class Flipper : MonoBehaviour, IShipBase
 		//return 0.0f;
 	}
 
-	public void onTriggerEnter2D()
+	//public void onTriggerEnter2D()
+	public void onTriggerEnter()
 	{
 	}
 	//Spawns new flipper enemy on field, associated with map line
