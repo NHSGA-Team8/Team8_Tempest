@@ -16,6 +16,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	public GameObject player;
 	public GameObject flipperEnemy;
 	public float respawnTime;
+	public MapLine thisMapLine;
 
 	//Private
 	private float _currentHealth;
@@ -113,6 +114,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	}
 	public void createNew()
 	{
+		float _rand1;
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
@@ -121,9 +123,12 @@ public class Flipper : MonoBehaviour, IShipBase
 		{
 			_straightMovement = false;
 		}
-		_rand = random ();
-		_vertex1 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand];
-		_vertex2 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand + 1];
+		_rand1 = random ();
+		//_vertex1 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand];
+		//_vertex2 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand + 1];
+		thisMapLine = player.GetComponent<PlayerShip> ().getMapManager ().mapLines [_rand1];
+		_vertex1 = thisMapLine.startPos;
+		_vertex2 = thisMapLine.endPos;
 		_lineCenter = (_vertex1 + _vertex2) / 2;
 		//_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().getDepth ();
 		_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().depth;
