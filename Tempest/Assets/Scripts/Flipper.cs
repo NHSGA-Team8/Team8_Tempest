@@ -45,7 +45,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		//_rand = Random.value * _mapManager.mapVertices.Length;
 		_rand = random ();
 		//print(Console.WriteLine(MapManager.mapVertices[1]));
-		_mapManager = GameObject.Find("MapManager");
+		_mapManager = GameObject.Find("MapManager").GetComponent<MapManager> ();
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
