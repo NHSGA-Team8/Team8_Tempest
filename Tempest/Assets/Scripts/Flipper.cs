@@ -43,7 +43,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		_reloaded = true;
 		//respawnTime = 0.2f;
 		//_rand = Random.value * _mapManager.mapVertices.Length;
-		_rand = RandomVal ();
+		//_rand = RandomVal ();
 		//print(Console.WriteLine(MapManager.mapVertices[1]));
 
 		_mapManager = GameObject.Find("MapManager").GetComponent<MapManager> ();
