@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+	public GameObject flipperPrefab;
+	public int totalFlippers;
+	public float roundTotalTime;
+
 	// Use this for initialization
 	void Start () {
 		
