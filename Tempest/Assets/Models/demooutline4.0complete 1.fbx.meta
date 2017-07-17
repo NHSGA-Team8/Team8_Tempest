@@ -1,18 +1,16 @@
 fileFormatVersion: 2
-guid: e293221af72b09346b7454493d211f92
-timeCreated: 1500182061
+guid: a382359a99fbcb143aee26abd5c59ba3
+timeCreated: 1500300812
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: ambientLight1
     100002: //RootNode
-    100004: group
-    100006: pPipe1
+    100004: pPipe1
     400000: ambientLight1
     400002: //RootNode
-    400004: group
-    400006: pPipe1
+    400004: pPipe1
     2300000: pPipe1
     3300000: pPipe1
     4300000: pPipe1
