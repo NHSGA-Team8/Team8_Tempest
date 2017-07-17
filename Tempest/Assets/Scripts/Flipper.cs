@@ -41,10 +41,11 @@ public class Flipper : MonoBehaviour, IShipBase
 	{
 		rb = GetComponent<Rigidbody> ();
 		_reloaded = true;
-		respawnTime = 0.2f;
+		//respawnTime = 0.2f;
 		//_rand = Random.value * _mapManager.mapVertices.Length;
 		_rand = random ();
 		//print(Console.WriteLine(MapManager.mapVertices[1]));
+		_mapManager = GameObject.Find("MapManager");
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
@@ -109,13 +110,15 @@ public class Flipper : MonoBehaviour, IShipBase
 		//rand = Random.value * (ship.GetComponent<PlayerShip>.getMapManager().mapVertices.Length - 1);
 
 		//return Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapVertices.Length - 2);
-		return (int)(Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapLines.Length - 1));
+		//return (int)(Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapLines.Length - 1));
+		return (int)(Random.value * (_mapManager.mapLines.Length - 1));
 		//return 0.0f;
 	}
 
 	public void onTriggerEnter2D()
 	{
 	}
+	//Spawns new flipper enemy on field, associated with map line
 	public void createNew()
 	{
 
@@ -132,12 +135,14 @@ public class Flipper : MonoBehaviour, IShipBase
 		_rand1 = random ();
 		//_vertex1 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand];
 		//_vertex2 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand + 1];
-		thisMapLine = player.GetComponent<PlayerShip> ().getMapManager ().mapLines [_rand1];
+		//thisMapLine = player.GetComponent<PlayerShip> ().getMapManager ().mapLines [_rand1];
+		thisMapLine = _mapManager.mapLines [_rand1];
 		_vertex1 = thisMapLine.startPos;
 		_vertex2 = thisMapLine.endPos;
 		_lineCenter = (_vertex1 + _vertex2) / 2;
 		//_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().getDepth ();
-		_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().depth;
+		//_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().depth;
+		_mapDepth = _mapManager.depth;
 		//GameObject newFlipper = Instantiate (flipperEnemy, new Vector3 (_lineCenter.x, _lineCenter.y, _lineCenter.z - _mapDepth));
 
 		GameObject newFlipper = Instantiate (flipperEnemy, _lineCenter + new Vector3 (0, 0, -1 * _mapDepth), rb.rotation);
