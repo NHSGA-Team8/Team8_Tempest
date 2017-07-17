@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Ethan Zhu and Rachael H.
+ */
 public class PlayerShip : MonoBehaviour, IShipBase {
 
 	// The axis used to take input.
@@ -67,5 +70,10 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	public void BulletDestroyed() {
 		_curBullets--;
+	}
+
+	public MapManager getMapManager()
+	{
+		return _mapManager;
 	}
 }
