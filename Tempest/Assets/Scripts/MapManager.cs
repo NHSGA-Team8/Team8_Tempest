@@ -42,7 +42,9 @@ public class MapManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		for (int i = 0; i < mapLines.Length - 1; i++) {
+			Debug.DrawLine (mapVertices [i], mapVertices [i + 1]);
+		}
 	}
 		
 	// Create stuff that forms the map
