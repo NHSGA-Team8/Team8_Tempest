@@ -40,6 +40,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	{
 		rb = GetComponent<Rigidbody> ();
 		_reloaded = true;
+		respawnTime = 0.2f;
 	}
 
 	// Update is called once per frame
