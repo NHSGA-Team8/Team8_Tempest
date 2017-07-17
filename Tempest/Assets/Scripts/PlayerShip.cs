@@ -10,6 +10,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	public Transform fireTransform;
 	public int maxBullets = 7;
 	public float fireCooldown = 0.2f;
+	public MapLine curMapLine;
 
 	// References to the MapManager and GameManager
 	private MapManager _mapManager;
@@ -19,18 +20,23 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	private Quaternion _desiredRotation;
 	private int _curBullets;
 	private float _lastFire;
+	private Rigidbody _rigidbody;
 
 	// Use this for initialization
 	void Start () {
 		_curBullets = 0;
+		_rigidbody = GetComponent<Rigidbody> ();
+		_mapManager = GameObject.Find ("MapManager").GetComponent<MapManager> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
 	}
 
 	void FixedUpdate(){
+
+		_inputValue = Input.GetAxis (inputAxis);
 
 		Move ();
 
@@ -43,6 +49,10 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	// Called each update to move sideways
 	void Move(){
 		Vector3 newPos;
+
+		MapLine newMapLine = curMapLine.UpdateMovement (transform.position, Time.deltaTime * _inputValue, out newPos);
+
+		_rigidbody.MovePosition (newPos);
 	}
 
 	// Called to fire a projectile.
@@ -67,5 +77,9 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	public void BulletDestroyed() {
 		_curBullets--;
+	}
+
+	public MapManager getMapManager() {
+		return _mapManager;
 	}
 }
