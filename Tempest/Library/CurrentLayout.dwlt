@@ -128,8 +128,12 @@ MonoBehaviour:
   m_MaxSize: {x: 10004, y: 14042}
 >>>>>>> 98a6a7b9091ebe31ea216327489607b750b3a23e
   vertical: 1
+<<<<<<< HEAD
   controlID: 595
 >>>>>>> f4b21006eecf5811aa6b10eba2d897d1f230e77e
+=======
+  controlID: 114
+>>>>>>> 5a569d09992191b84855707e56e9f3e2098986d2
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -208,8 +212,12 @@ MonoBehaviour:
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
+<<<<<<< HEAD
   m_LastLoadedLayoutName: 2 by 3
 >>>>>>> f4b21006eecf5811aa6b10eba2d897d1f230e77e
+=======
+  m_LastLoadedLayoutName: 
+>>>>>>> 5a569d09992191b84855707e56e9f3e2098986d2
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,8 +255,12 @@ MonoBehaviour:
 >>>>>>> 98a6a7b9091ebe31ea216327489607b750b3a23e
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
+<<<<<<< HEAD
   controlID: 315
 >>>>>>> f4b21006eecf5811aa6b10eba2d897d1f230e77e
+=======
+  controlID: 147
+>>>>>>> 5a569d09992191b84855707e56e9f3e2098986d2
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -327,9 +339,16 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 442}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
+<<<<<<< HEAD
+  controlID: 47
+=======
   controlID: 316
 >>>>>>> 98a6a7b9091ebe31ea216327489607b750b3a23e
+<<<<<<< HEAD
 >>>>>>> f4b21006eecf5811aa6b10eba2d897d1f230e77e
+=======
+>>>>>>> da16adca4f806a2edf58d0ee3e01abed6c17db78
+>>>>>>> 5a569d09992191b84855707e56e9f3e2098986d2
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -566,9 +585,9 @@ MonoBehaviour:
     height: 402
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d6ecffff
-    m_LastClickedID: -4906
-    m_ExpandedIDs: d8ecffff00000000
+    m_SelectedIDs: a0260000
+    m_LastClickedID: 9888
+    m_ExpandedIDs: e8fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -677,6 +696,7 @@ MonoBehaviour:
     m_SearchArea: 0
     m_Folders:
 <<<<<<< HEAD
+<<<<<<< HEAD
     - Assets
   m_ViewMode: 1
   m_StartGridSize: 64
@@ -690,6 +710,9 @@ MonoBehaviour:
     m_SelectedIDs: b0230000
     m_LastClickedID: 9136
     m_ExpandedIDs: 00000000b023000000ca9a3bffffff7f
+=======
+    - Assets/Scripts
+>>>>>>> 5a569d09992191b84855707e56e9f3e2098986d2
 =======
 <<<<<<< HEAD
     - Assets/_Scenes
@@ -707,20 +730,30 @@ MonoBehaviour:
     m_ExpandedIDs: 000000006c25000000ca9a3bffffff7f
 =======
     - Assets/Prefabs
+>>>>>>> da16adca4f806a2edf58d0ee3e01abed6c17db78
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Rachael\Documents\Team8_Tempest\Tempest
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
+    m_SelectedIDs: fe250000
+    m_LastClickedID: 9726
+    m_ExpandedIDs: 00000000c224000044250000ea250000ec25000000ca9a3bffffff7f
+=======
     m_SelectedIDs: 3e280000
     m_LastClickedID: 10302
     m_ExpandedIDs: 0000000086270000f62700004a2800004c28000000ca9a3bffffff7f
 >>>>>>> 98a6a7b9091ebe31ea216327489607b750b3a23e
+<<<<<<< HEAD
 >>>>>>> f4b21006eecf5811aa6b10eba2d897d1f230e77e
+=======
+>>>>>>> da16adca4f806a2edf58d0ee3e01abed6c17db78
+>>>>>>> 5a569d09992191b84855707e56e9f3e2098986d2
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -750,14 +783,22 @@ MonoBehaviour:
     m_SelectedIDs: 
     m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000b023000000ca9a3bffffff7f
+=======
+    m_ExpandedIDs: 00000000c224000044250000ea250000ec250000
+>>>>>>> 5a569d09992191b84855707e56e9f3e2098986d2
 =======
 <<<<<<< HEAD
     m_ExpandedIDs: 000000006c250000
 =======
     m_ExpandedIDs: 0000000086270000f62700004a2800004c28000000ca9a3bffffff7f
 >>>>>>> 98a6a7b9091ebe31ea216327489607b750b3a23e
+<<<<<<< HEAD
 >>>>>>> f4b21006eecf5811aa6b10eba2d897d1f230e77e
+=======
+>>>>>>> da16adca4f806a2edf58d0ee3e01abed6c17db78
+>>>>>>> 5a569d09992191b84855707e56e9f3e2098986d2
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
