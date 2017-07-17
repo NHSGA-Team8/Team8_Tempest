@@ -65,7 +65,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		{
 			//Only move in Z direction, aka depth
 			rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
-			rb.AddForce (movementForce * transform.forward * Time.deltaTime);
+			rb.AddForce (-1 * movementForce * transform.forward * Time.deltaTime);
 		}
 		else
 		{

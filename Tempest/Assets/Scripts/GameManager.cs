@@ -137,6 +137,6 @@ public class GameManager : MonoBehaviour {
 		_vertex2 = thisMapLine.endPos;
 		_lineCenter = (_vertex1 + _vertex2) / 2;
 		_mapDepth = _mapManager.depth;
-		GameObject newFlipper = Instantiate (flipperPrefab, _lineCenter + new Vector3 (0, 0, -1 * _mapDepth), flipperPrefab.GetComponent<Rigidbody> ().rotation);
+		GameObject newFlipper = Instantiate (flipperPrefab, _lineCenter + new Vector3 (0, 0, 1 * _mapDepth), flipperPrefab.GetComponent<Rigidbody> ().rotation);
 	}
 }
