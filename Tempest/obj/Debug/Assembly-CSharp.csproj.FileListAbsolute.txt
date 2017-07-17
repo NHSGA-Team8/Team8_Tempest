@@ -60,3 +60,5 @@ C:\Users\Rachael\Documents\Team8_Tempest\Tempest\Temp\bin\Debug\UnityEngine.Anal
 C:\Users\Rachael\Documents\Team8_Tempest\Tempest\Temp\bin\Debug\UnityEngine.HoloLens.xml
 C:\Users\Rachael\Documents\Team8_Tempest\Tempest\Temp\bin\Debug\UnityEngine.VR.xml
 C:\Users\Rachael\Documents\Team8_Tempest\Tempest\obj\Debug\Assembly-CSharp.pdb
+C:\Users\brian\Desktop\Programming stuff\Tempest\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+C:\Users\brian\Desktop\Programming stuff\Tempest\obj\Debug\Assembly-CSharp.dll

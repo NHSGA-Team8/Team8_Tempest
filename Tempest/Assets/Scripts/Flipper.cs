@@ -33,6 +33,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		rb = GetComponent<Rigidbody> ();
 		_reloaded = true;
 		rand = Random.value * _mapManager.mapVertices.Length;
+		print(Console.WriteLine(MapManager.mapVertices[1]));
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
