@@ -43,7 +43,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		_reloaded = true;
 		//respawnTime = 0.2f;
 		//_rand = Random.value * _mapManager.mapVertices.Length;
-		_rand = random ();
+		_rand = RandomVal ();
 		//print(Console.WriteLine(MapManager.mapVertices[1]));
 
 		_mapManager = GameObject.Find("MapManager").GetComponent<MapManager> ();
@@ -72,12 +72,20 @@ public class Flipper : MonoBehaviour, IShipBase
 			//Move forward by one or a few pixels
 			//While moving to next section of map
 		}
+		/*
 		for (float f = 1f; f >= 0; f -= 0.1f)
 		{
 			createNew ();
 			//yield return new WaitForSeconds (respawnTime);
 		}
+		*/
 	}
+
+	/*
+	IEnumerator Spawn ()
+	{
+	}
+	*/
 
 	// Called to fire a projectile.
 	public void Fire()
@@ -100,9 +108,10 @@ public class Flipper : MonoBehaviour, IShipBase
 
 	//public void Transistion()
 
+	/*
 	//public float random(GameObject ship)
 	//public float random()
-	public int random()
+	public int RandomVal()
 	{
 		//rand = Random.value * _mapManager.mapVertices.Length;
 		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShip>
@@ -116,13 +125,21 @@ public class Flipper : MonoBehaviour, IShipBase
 		return (int)(Random.value * (_mapManager.mapLines.Length - 1));
 		//return 0.0f;
 	}
+	*/
 
 	//public void onTriggerEnter2D()
-	public void onTriggerEnter()
+	/*
+	public void OnTriggerEnter()
 	{
 	}
+	*/
+	public void OnCollisionEnter()
+	{
+		TakeDamage (100);
+	}
+	/*
 	//Spawns new flipper enemy on field, associated with map line
-	public void createNew()
+	public void CreateNew()
 	{
 
 		//float _rand1;
@@ -135,7 +152,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		{
 			_straightMovement = false;
 		}
-		_rand1 = random ();
+		_rand1 = RandomVal ();
 		//_vertex1 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand];
 		//_vertex2 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand + 1];
 		//thisMapLine = player.GetComponent<PlayerShip> ().getMapManager ().mapLines [_rand1];
@@ -150,5 +167,13 @@ public class Flipper : MonoBehaviour, IShipBase
 
 		GameObject newFlipper = Instantiate (flipperEnemy, _lineCenter + new Vector3 (0, 0, -1 * _mapDepth), rb.rotation);
 	}
-
+	*/
+	public bool GetStraightMovement()
+	{
+		return _straightMovement;
+	}
+	public void SetStraightMovement(bool isStraight)
+	{
+		_straightMovement = isStraight;
+	}
 }
