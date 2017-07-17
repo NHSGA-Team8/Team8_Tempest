@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject playerPrefab;
 	public GameObject flipperPrefab;
+	public GameObject spawnEffect;
 	public int totalFlippers;
 	public float spawnDelay;
 	public float roundTotalTime;
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour {
 		flippers = new Flipper[totalFlippers];
 		_mapManager = GameObject.Find ("MapManager").GetComponent<MapManager> ();
 		_playerRef = GameObject.Find ("Player");
+
+		StartCoroutine (GameLoop ());
 	}
 	
 	// Update is called once per frame
@@ -67,7 +70,7 @@ public class GameManager : MonoBehaviour {
 
 	private IEnumerator RoundPlaying() {
 
-		while (curLives > 0 || roundTotalTime > Time.fixedTime - _startTime)
+		while (curLives >= 0 || roundTotalTime > Time.fixedTime - _startTime)
 			yield return null;
 	}
 
@@ -80,11 +83,16 @@ public class GameManager : MonoBehaviour {
 			_playerRef = Instantiate (playerPrefab, _mapManager.mapLines [_mapManager.startMapLineIndex].GetMidPoint (), Quaternion.Euler (0f, 0f, 0f));
 		} else {
 			_playerRef.SetActive (true);
-			//_playerRef.transform.position = 
+			_playerRef.transform.position = _mapManager.mapLines [_mapManager.startMapLineIndex].GetMidPoint ();
 		}
+		GameObject spawnSparkles = Instantiate (spawnEffect, _playerRef.transform);
+		Destroy (spawnSparkles, 5f);
 	}
 
-	public void PlayerDied() {
+	public IEnumerator PlayerDied() {
+		curLives--;
+		yield return new WaitForSeconds(3);
+		SpawnPlayerShip ();
 
 	}
 
