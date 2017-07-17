@@ -24,7 +24,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	private bool _reloaded;
 	private MapManager _mapManager; //How do I use the same _mapManager as that of the player ship if it's private?
 	private GameManager _gameManager;
-	private float _rand;
+	private int _rand; //private float _rand;
 	private Vector3 _vertex1;
 	private Vector3 _vertex2;
 	private Vector3 _lineCenter;
@@ -98,7 +98,8 @@ public class Flipper : MonoBehaviour, IShipBase
 	//public void Transistion()
 
 	//public float random(GameObject ship)
-	public float random()
+	//public float random()
+	public int random()
 	{
 		//rand = Random.value * _mapManager.mapVertices.Length;
 		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShip>
@@ -108,7 +109,8 @@ public class Flipper : MonoBehaviour, IShipBase
 		//rand = Random.value * (ship.GetComponent<PlayerShip>.getMapManager().mapVertices.Length - 1);
 
 		//return Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapVertices.Length - 2);
-		return 0.0f;
+		return (int)(Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapLines.Length - 1));
+		//return 0.0f;
 	}
 
 	public void onTriggerEnter2D()
@@ -116,8 +118,9 @@ public class Flipper : MonoBehaviour, IShipBase
 	}
 	public void createNew()
 	{
-		/*
-		float _rand1;
+
+		//float _rand1;
+		int _rand1;
 		if (levelNum == 1)
 		{
 			_straightMovement = true;
@@ -136,8 +139,8 @@ public class Flipper : MonoBehaviour, IShipBase
 		//_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().getDepth ();
 		_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().depth;
 		//GameObject newFlipper = Instantiate (flipperEnemy, new Vector3 (_lineCenter.x, _lineCenter.y, _lineCenter.z - _mapDepth));
-		GameObject newFlipper = Instantiate (flipperEnemy, _lineCenter + new Vector3 (0, 0, -1 * _mapDepth));
-		*/
+
+		GameObject newFlipper = Instantiate (flipperEnemy, _lineCenter + new Vector3 (0, 0, -1 * _mapDepth), rb.rotation);
 	}
 
 }
