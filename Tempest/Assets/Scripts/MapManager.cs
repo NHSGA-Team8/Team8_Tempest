@@ -18,6 +18,8 @@ public class MapManager : MonoBehaviour {
 	// MapLines are generated at Start(), and they represent a line in the map.
 	public MapLine[] mapLines;
 
+	public int startMapLineIndex;
+
 	public float depth;
 
 	// Use this for initialization
@@ -46,11 +48,6 @@ public class MapManager : MonoBehaviour {
 			Debug.DrawLine (mapVertices [i], mapVertices [i + 1]);
 		}
 	}
-		
-	// Create stuff that forms the map
-	public void CreateOutline(){
-
-	}
 
 	// return the normal vector of the line and the pos
 	public Quaternion GetVerticeNormal(Vector3 pos){
@@ -67,4 +64,5 @@ public class MapManager : MonoBehaviour {
 		return finalQuat;
 
 	}
+		
 }
