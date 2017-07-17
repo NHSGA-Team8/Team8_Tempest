@@ -34,14 +34,13 @@ public class MapLine {
 	// Called by ships to get information on what the actual movement should be
 	public MapLine UpdateMovement(Vector3 curPos, float relativeMovement, out Vector3 newPos, out Quaternion newRotation)
 	{
-		
- 		// Get the Vector3 normal that represents the direction in which the movement is
-		// Multiply normal by relativeMovement, adding onto curPos to get newPos
-		newPos = curPos + _dir.normalized * relativeMovement;
+		// TODO Get the Vector3 normal that represents the direction in which the movement is
+
+		// TODO Multiply normal by relativeMovement, adding onto curPos to get newPos
 
 		// TODO Check if this new position is out of bounds; if so, get the next MapLine
 
-		// TODO get newRotation
+		// TODO If we have a new MapLine, get newRotation
 
 		// TODO assign the newMovement and newRotation (if new MapLine)
 
@@ -67,6 +66,12 @@ public class MapLine {
 	public Vector3 GetDirectionVector()
 	{
 		return (endPos - startPos);
+	}
+
+	// Return a normalized vector of the line.
+	public Vector3 GetNormalVector()
+	{
+		return (endPos - startPos).normalized;
 	}
 
 	// Sets the MapLine references
