@@ -25,6 +25,7 @@ public class MapManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 		mapLines = new MapLine[mapVertices.Length - 1];
 		for (int i = 0; i < mapLines.Length; i++) {
 			mapLines [i] = new MapLine (mapVertices[i], mapVertices[i+1]);

@@ -40,7 +40,23 @@ public class Flipper : MonoBehaviour, IShipBase
 	{
 		rb = GetComponent<Rigidbody> ();
 		_reloaded = true;
+<<<<<<< HEAD
 		respawnTime = 0.2f;
+=======
+<<<<<<< HEAD
+		rand = Random.value * _mapManager.mapVertices.Length;
+		print(Console.WriteLine(MapManager.mapVertices[1]));
+		if (levelNum == 1)
+		{
+			_straightMovement = true;
+		}
+		else
+		{
+			_straightMovement = false;
+		}
+=======
+>>>>>>> 46bf56647bc50bc831d6cb442e087bb7903e842f
+>>>>>>> 98a6a7b9091ebe31ea216327489607b750b3a23e
 	}
 
 	// Update is called once per frame
