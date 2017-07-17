@@ -43,7 +43,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		_reloaded = true;
 		//respawnTime = 0.2f;
 		//_rand = Random.value * _mapManager.mapVertices.Length;
-		_rand = random ();
+		//_rand = RandomVal ();
 		//print(Console.WriteLine(MapManager.mapVertices[1]));
 
 		_mapManager = GameObject.Find("MapManager").GetComponent<MapManager> ();
@@ -64,20 +64,30 @@ public class Flipper : MonoBehaviour, IShipBase
 		if (_straightMovement)
 		{
 			//Only move in Z direction, aka depth
-			rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
-			rb.AddForce (movementForce * transform.forward * Time.deltaTime);
+			//rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
+			//rb.AddForce (-1 * movementForce * transform.forward * Time.deltaTime);
+
+			rb.MovePosition (transform.position + transform.forward * (Time.deltaTime * movementForce * -1));
 		}
 		else
 		{
 			//Move forward by one or a few pixels
 			//While moving to next section of map
 		}
+		/*
 		for (float f = 1f; f >= 0; f -= 0.1f)
 		{
 			createNew ();
 			//yield return new WaitForSeconds (respawnTime);
 		}
+		*/
 	}
+
+	/*
+	IEnumerator Spawn ()
+	{
+	}
+	*/
 
 	// Called to fire a projectile.
 	public void Fire()
@@ -98,56 +108,20 @@ public class Flipper : MonoBehaviour, IShipBase
 		gameObject.SetActive (false); // Disable enemy
 	}
 
-	//public void Transistion()
-
-	//public float random(GameObject ship)
-	//public float random()
-	public int random()
-	{
-		//rand = Random.value * _mapManager.mapVertices.Length;
-		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShip>
-		//rand = Random.value * (PlayerShip.getMapManager().mapVertices.Length - 2);
-		//# of mapLines = # of mapVertices - 1
-		//Subtract another 1 to be able to access rand + 1
-		//rand = Random.value * (ship.GetComponent<PlayerShip>.getMapManager().mapVertices.Length - 1);
-
-		//return Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapVertices.Length - 2);
-		//return (int)(Random.value * (player.GetComponent<PlayerShip> ().getMapManager().mapLines.Length - 1));
-		return (int)(Random.value * (_mapManager.mapLines.Length - 1));
-		//return 0.0f;
-	}
-
-	public void onTriggerEnter2D()
-	{
-	}
-	//Spawns new flipper enemy on field, associated with map line
-	public void createNew()
-	{
-
-		//float _rand1;
-		int _rand1;
-		if (levelNum == 1)
-		{
-			_straightMovement = true;
+	void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.GetComponent<PlayerShip> ()) {
+			
+			collision.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
 		}
-		else
-		{
-			_straightMovement = false;
-		}
-		_rand1 = random ();
-		//_vertex1 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand];
-		//_vertex2 = player.GetComponent<PlayerShip> ().getMapManager ().mapVertices [_rand + 1];
-		//thisMapLine = player.GetComponent<PlayerShip> ().getMapManager ().mapLines [_rand1];
-		thisMapLine = _mapManager.mapLines [_rand1];
-		_vertex1 = thisMapLine.startPos;
-		_vertex2 = thisMapLine.endPos;
-		_lineCenter = (_vertex1 + _vertex2) / 2;
-		//_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().getDepth ();
-		//_mapDepth = player.GetComponent<PlayerShip> ().getMapManager ().depth;
-		_mapDepth = _mapManager.depth;
-		//GameObject newFlipper = Instantiate (flipperEnemy, new Vector3 (_lineCenter.x, _lineCenter.y, _lineCenter.z - _mapDepth));
-
-		GameObject newFlipper = Instantiate (flipperEnemy, _lineCenter + new Vector3 (0, 0, -1 * _mapDepth), rb.rotation);
 	}
 
+
+	public bool GetStraightMovement()
+	{
+		return _straightMovement;
+	}
+	public void SetStraightMovement(bool isStraight)
+	{
+		_straightMovement = isStraight;
+	}
 }

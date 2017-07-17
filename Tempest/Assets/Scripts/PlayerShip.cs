@@ -16,6 +16,10 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	public float fireCooldown = 0.2f;
 	public MapLine curMapLine;
 
+	public AudioClip soundFire;
+	public AudioClip soundDeath;
+	public AudioClip soundZapper;
+
 	// References to the MapManager and GameManager
 	private MapManager _mapManager;
 	private GameManager _gameManager;
@@ -25,12 +29,17 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	private int _curBullets;
 	private float _lastFire;
 	private Rigidbody _rigidbody;
+	private float _godTimer;
+	private AudioSource _audioSource;
 
 	// Use this for initialization
 	void Start () {
 		_curBullets = 0;
 		_rigidbody = GetComponent<Rigidbody> ();
 		_mapManager = GameObject.Find ("MapManager").GetComponent<MapManager> ();
+		_gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+		_godTimer = Time.fixedTime + 3;
+		_audioSource = GetComponent<AudioSource> ();
 	}
 
 	// Update is called once per frame
@@ -80,13 +89,17 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	// Called when a projectile damages the ship. Should call OnDeath() if it kills;
 	public void TakeDamage(int dmg){
+		// GodTimer is when the ship is invincible
+		if (Time.fixedTime < _godTimer)
+			return;
 		// Since the player is dead on touch, just destroy it
 		OnDeath();
 	}
 
 	// Called when the ship dies. Add points, do game state detection, etc.
 	public void OnDeath(){
-
+		gameObject.SetActive (false);
+		_gameManager.OnPlayerDeath ();
 	}
 
 	public void BulletDestroyed() {
