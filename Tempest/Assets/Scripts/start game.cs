@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scriptformakingoutline : MonoBehaviour {
+public class startgame : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
