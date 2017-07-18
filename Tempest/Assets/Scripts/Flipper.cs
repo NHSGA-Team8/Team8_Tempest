@@ -60,6 +60,11 @@ public class Flipper : MonoBehaviour, IShipBase
 		{
 			_straightMovement = false;
 		}
+
+		if (Random.value > 0.5)
+			_isCW = 1;
+		else
+			_isCW = -1;
 	}
 
 	// Update is called once per frame
@@ -67,22 +72,14 @@ public class Flipper : MonoBehaviour, IShipBase
 	{
 		if (rb.position.z <= 0) //In case the player ship is flying in after respawning?
 		{
-			//transform.position = new Vector3 (transform.position.x, transform.position.y, 0);
-			rb.MovePosition (new Vector3 (transform.position.x, transform.position.y, 0));
-			rb.constraints = RigidbodyConstraints.FreezePositionZ;
-			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
-			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
-			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
-			if (_beCW >= _beCCW)
+			Vector3 newPos;
+			MapLine newMapLine;
+			thisMapLine.UpdateMovement (transform.position, Time.deltaTime * _isCW * movementForce * 0.2f, out newPos, out newMapLine);
+			rb.MovePosition (new Vector3(newPos.x, newPos.y, 0));
+			if (newMapLine != null)
 			{
-				_isCW = 1;
+				thisMapLine = newMapLine;
 			}
-			else
-			{
-				_isCW = -1;
-			}
-			//_inputValue = Input.GetAxis (inputAxis);
-			Move (_isCW);
 		}
 		else if (_straightMovement)
 		{
@@ -97,30 +94,8 @@ public class Flipper : MonoBehaviour, IShipBase
 			//Move forward by one or a few pixels
 			//While moving to next section of map
 		}
-		/*
-		for (float f = 1f; f >= 0; f -= 0.1f)
-		{
-			createNew ();
-			//yield return new WaitForSeconds (respawnTime);
-		}
-		*/
 	}
-	void Move(int dir){
-		Vector3 newPos;
-		MapLine newMapLine;
-		thisMapLine.UpdateMovement (transform.position, Time.deltaTime * dir * movementForce, out newPos, out newMapLine);
-		rb.MovePosition (newPos);
-		if (newMapLine != null)
-		{
-			thisMapLine = newMapLine;
-		}
-	}
-
-	/*
-	IEnumerator Spawn ()
-	{
-	}
-	*/
+		
 
 	// Called to fire a projectile.
 	public void Fire()
@@ -141,10 +116,10 @@ public class Flipper : MonoBehaviour, IShipBase
 		gameObject.SetActive (false); // Disable enemy
 	}
 
-	void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.GetComponent<PlayerShip> ()) {
+	void OnCollisionEnter(Collision collider) {
+		if (collider.gameObject.GetComponent<PlayerShip> ()) {
 			
-			collision.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
+			collider.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
 			Destroy (gameObject);
 		}
 	}
@@ -156,5 +131,9 @@ public class Flipper : MonoBehaviour, IShipBase
 	public void SetStraightMovement(bool isStraight)
 	{
 		_straightMovement = isStraight;
+	}
+
+	public void SetMapLine(MapLine newML) {
+		thisMapLine = newML;
 	}
 }
