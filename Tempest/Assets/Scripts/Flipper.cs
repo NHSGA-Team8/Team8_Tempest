@@ -62,10 +62,12 @@ public class Flipper : MonoBehaviour, IShipBase
 			_straightMovement = false;
 		}
 
+		/*
 		if (Random.value > 0.5)
 			_isCW = 1;
 		else
 			_isCW = -1;
+		*/
 	}
 
 	// Update is called once per frame
@@ -81,14 +83,25 @@ public class Flipper : MonoBehaviour, IShipBase
 			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
 			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
 			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
-			if (_beCW >= _beCCW)
+			if (_beCW > _beCCW)
 			{
 				_isCW = 1;
 			}
-			else
+			else if (_beCW < _beCCW)
 			{
 				_isCW = -1;
 			}
+			else //Equal distance from player
+			{
+				if (Random.value > 0.5)
+				{
+					_isCW = 1;
+				}
+				else
+				{
+					_isCW = -1;
+				}
+			}	
 			//Move (_isCW);
 			thisMapLine.UpdateMovement (transform.position, Time.deltaTime * _isCW * movementForce * 0.2f, out newPos, out newMapLine);
 			rb.MovePosition (new Vector3(newPos.x, newPos.y, 0));
@@ -147,7 +160,9 @@ public class Flipper : MonoBehaviour, IShipBase
 		gameObject.SetActive (false); // Disable enemy
 	}
 
-	void OnCollisionEnter(Collision collider) {
+	void OnCollisionEnter(Collision collider)
+	//void onTriggerEnter(Collision collider)
+	{
 		if (collider.gameObject.GetComponent<PlayerShip> ()) {
 			collider.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
 			OnDeath ();
