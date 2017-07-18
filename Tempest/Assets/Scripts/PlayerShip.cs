@@ -42,6 +42,10 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 		_audioSource = GetComponent<AudioSource> ();
 	}
 
+	void OnEnable() {
+		_godTimer = Time.fixedTime + 3;
+	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -91,6 +95,9 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	public void TakeDamage(int dmg){
 		// GodTimer is when the ship is invincible
 		if (Time.fixedTime < _godTimer)
+			return;
+
+		if (gameObject.activeSelf == false)
 			return;
 		// Since the player is dead on touch, just destroy it
 		OnDeath();
