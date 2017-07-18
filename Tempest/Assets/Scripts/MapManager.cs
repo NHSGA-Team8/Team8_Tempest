@@ -27,6 +27,7 @@ public class MapManager : MonoBehaviour {
 		mapLines = new MapLine[mapVertices.Length - 1];
 		for (int i = 0; i < mapLines.Length; i++) {
 			mapLines [i] = new MapLine (mapVertices[i], mapVertices[i+1]);
+			mapLines [i].SetLineNum (i);
 		}
 
 		for (int i = 0; i < mapLines.Length; i++) {

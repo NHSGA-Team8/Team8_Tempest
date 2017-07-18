@@ -31,7 +31,8 @@ public class Flipper : MonoBehaviour, IShipBase
 	private Vector3 _lineCenter;
 	private float _mapDepth;
 	private float _inputValue;
-	private 
+	private int _isCW; //isClockWise: 1 = CW
+	private int _currPlayerNum;
 
 	Rigidbody rb;
 	//Audio
@@ -86,15 +87,25 @@ public class Flipper : MonoBehaviour, IShipBase
 		*/
 		if (rb.position.z == 0) //In case the player ship is flying in after respawning?
 		{
-			bool isCW; //isClockWise
-			_inputValue = Input.GetAxis (inputAxis);
-			Move ();
+			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
+			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
+			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
+			if (_beCW >= _beCCW)
+			{
+				_isCW = 1;
+			}
+			else
+			{
+				_isCW = -1;
+			}
+			//_inputValue = Input.GetAxis (inputAxis);
+			Move (_isCW);
 		}
 	}
-	void Move(){
+	void Move(int dir){
 		Vector3 newPos;
 		MapLine newMapLine;
-		thisMapLine.UpdateMovement (transform.position, Time.deltaTime * Input.GetAxis (inputAxis) * movementForce, out newPos, out newMapLine);
+		thisMapLine.UpdateMovement (transform.position, Time.deltaTime * dir * movementForce, out newPos, out newMapLine);
 		rb.MovePosition (newPos);
 		if (newMapLine != null)
 		{
