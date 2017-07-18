@@ -45,7 +45,7 @@ public class MapLine {
 
 		newMapLine = null;
 
-
+		curPos.z = 0;
  		// Get the Vector3 normal that represents the direction in which the movement is
 		// Multiply normal by relativeMovement, adding onto curPos to get newPos
 		newPos = curPos + _dir.normalized * relativeMovement;
