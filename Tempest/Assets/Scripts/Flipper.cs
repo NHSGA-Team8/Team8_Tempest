@@ -87,6 +87,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		*/
 		if (rb.position.z == 0) //In case the player ship is flying in after respawning?
 		{
+			rb.constraints = RigidbodyConstraints.FreezePositionZ;
 			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
 			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
 			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
