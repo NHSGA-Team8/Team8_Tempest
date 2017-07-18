@@ -75,6 +75,21 @@ public class Flipper : MonoBehaviour, IShipBase
 		{
 			Vector3 newPos;
 			MapLine newMapLine;
+			//transform.position = new Vector3 (transform.position.x, transform.position.y, 0);
+			rb.MovePosition (new Vector3 (transform.position.x, transform.position.y, 0));
+			rb.constraints = RigidbodyConstraints.FreezePositionZ;
+			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
+			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
+			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
+			if (_beCW >= _beCCW)
+			{
+				_isCW = 1;
+			}
+			else
+			{
+				_isCW = -1;
+			}
+			//Move (_isCW);
 			thisMapLine.UpdateMovement (transform.position, Time.deltaTime * _isCW * movementForce * 0.2f, out newPos, out newMapLine);
 			rb.MovePosition (new Vector3(newPos.x, newPos.y, 0));
 			if (newMapLine != null)
@@ -96,8 +111,19 @@ public class Flipper : MonoBehaviour, IShipBase
 			//While moving to next section of map
 		}
 	}
-		
-
+	/*
+	void Move(int dir){
+			Vector3 newPos;
+			MapLine newMapLine;
+			thisMapLine.UpdateMovement (transform.position, Time.deltaTime * dir * movementForce, out newPos, out newMapLine);
+			//rb.MovePosition (newPos);
+			rb.MovePosition (new Vector3(newPos.x, newPos.y, 0));
+			if (newMapLine != null)
+			{
+				thisMapLine = newMapLine;
+			}
+	}
+	*/
 	// Called to fire a projectile.
 	public void Fire()
 	{
@@ -123,7 +149,6 @@ public class Flipper : MonoBehaviour, IShipBase
 
 	void OnCollisionEnter(Collision collider) {
 		if (collider.gameObject.GetComponent<PlayerShip> ()) {
-			
 			collider.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
 			OnDeath ();
 		}
