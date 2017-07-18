@@ -143,6 +143,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		if (collision.gameObject.GetComponent<PlayerShip> ()) {
 			
 			collision.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
+			Destroy (gameObject);
 		}
 	}
 
