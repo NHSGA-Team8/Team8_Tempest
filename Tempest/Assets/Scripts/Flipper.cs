@@ -17,6 +17,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	public GameObject flipperEnemy;
 	public float respawnTime;
 	public MapLine thisMapLine;
+	public string inputAxis = "Horizontal";
 
 	//Private
 	private float _currentHealth;
@@ -29,12 +30,15 @@ public class Flipper : MonoBehaviour, IShipBase
 	private Vector3 _vertex2;
 	private Vector3 _lineCenter;
 	private float _mapDepth;
+	private float _inputValue;
+	private int _isCW; //isClockWise: 1 = CW
+	private int _currPlayerNum;
 
 	Rigidbody rb;
 	//Audio
-	AudioSource flipperSounds;
-	AudioClip flipperShooting;
-	AudioClip flipperExplosion;
+	public AudioSource flipperSounds;
+	public AudioClip flipperShooting;
+	public AudioClip flipperExplosion;
 
 	// Use this for initialization
 	void Start ()
@@ -81,6 +85,33 @@ public class Flipper : MonoBehaviour, IShipBase
 			//yield return new WaitForSeconds (respawnTime);
 		}
 		*/
+		if (rb.position.z == 0) //In case the player ship is flying in after respawning?
+		{
+			rb.constraints = RigidbodyConstraints.FreezePositionZ;
+			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
+			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
+			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
+			if (_beCW >= _beCCW)
+			{
+				_isCW = 1;
+			}
+			else
+			{
+				_isCW = -1;
+			}
+			//_inputValue = Input.GetAxis (inputAxis);
+			Move (_isCW);
+		}
+	}
+	void Move(int dir){
+		Vector3 newPos;
+		MapLine newMapLine;
+		thisMapLine.UpdateMovement (transform.position, Time.deltaTime * dir * movementForce, out newPos, out newMapLine);
+		rb.MovePosition (newPos);
+		if (newMapLine != null)
+		{
+			thisMapLine = newMapLine;
+		}
 	}
 
 	/*
@@ -112,9 +143,9 @@ public class Flipper : MonoBehaviour, IShipBase
 		if (collision.gameObject.GetComponent<PlayerShip> ()) {
 			
 			collision.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
+			Destroy (gameObject);
 		}
 	}
-
 
 	public bool GetStraightMovement()
 	{

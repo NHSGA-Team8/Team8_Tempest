@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour {
 	public int nextScene;
 	public int totalLives;
 
+	public Canvas uiCanvas;
+	public Text notification;
+
 	public GameObject flipperShell; //Enemy Projectile
 
 	public enum GAMESTATE {PREGAME, STARTING, PLAYING, ENDING};
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		curLives = totalLives;
 		flippers = new Flipper[totalFlippers];
 		_mapManager = GameObject.Find ("MapManager").GetComponent<MapManager> ();
 		_playerRef = GameObject.Find ("Player");
@@ -55,7 +59,7 @@ public class GameManager : MonoBehaviour {
 		curGamestate = GAMESTATE.ENDING;
 		yield return StartCoroutine(RoundEnding());
 
-		if (_playerRef == null || _playerRef.activeSelf == false)
+		if (curLives < 0)
 		{
 			// Back to menu if dead
 			//SceneManager.LoadScene(0);
@@ -76,13 +80,13 @@ public class GameManager : MonoBehaviour {
 
 	private IEnumerator RoundPlaying() {
 
-
-
-		while (curLives >= 0 || roundTotalTime > Time.fixedTime - _startTime)
+		while (curLives >= 0 && EnemiesAtEdge() == false)
 			yield return null;
 	}
 
 	private IEnumerator RoundEnding() {
+		//print ("RoundEnding");
+		SetEndMessage();
 		yield return new WaitForSeconds(3);
 	}
 
@@ -144,5 +148,25 @@ public class GameManager : MonoBehaviour {
 		thisMapLine = _mapManager.mapLines [_rand1];
 		_mapDepth = _mapManager.depth;
 		GameObject newFlipper = Instantiate (flipperPrefab, thisMapLine.GetMidPoint() + new Vector3 (0, 0, 1 * _mapDepth), flipperPrefab.transform.rotation);
+	}
+
+	bool EnemiesAtEdge() {
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enemy in enemies) {
+			if (enemy.transform.position.z > 0.1f)
+				return false;
+		}
+		return true;
+	}
+
+	void SetEndMessage() {
+		string msg = "";
+
+		if (curLives < 0)
+			msg = "Game Over";
+		else
+			msg = "Round Complete";
+
+		notification.text = msg;
 	}
 }
