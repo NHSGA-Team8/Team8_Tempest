@@ -10,16 +10,18 @@ public class PlayerBullet : MonoBehaviour {
 		Destroy (gameObject, 2f);
 	}
 
-	void Explode() {
-
-	}
-
 	public void SetShip(GameObject newShip) {
 		ship = newShip;
 	}
 
 	void OnDestroy() {
 		ship.GetComponent<PlayerShip>().BulletDestroyed ();
+	}
+
+	void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.GetComponent<Flipper> ())
+			collision.gameObject.GetComponent<Flipper> ().TakeDamage (1);
+		Destroy (gameObject);
 	}
 
 }
