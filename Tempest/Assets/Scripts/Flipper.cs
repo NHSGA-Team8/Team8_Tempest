@@ -32,7 +32,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	private Vector3 _lineCenter;
 	private float _mapDepth;
 	private float _inputValue;
-	private int _isCW; //isClockWise: 1 = CW
+	private int _isCW = 0; //isClockWise: 1 = CW
 	private int _currPlayerNum;
 	private AudioSource _audioSource;
 
@@ -81,27 +81,30 @@ public class Flipper : MonoBehaviour, IShipBase
 			rb.MovePosition (new Vector3 (transform.position.x, transform.position.y, 0));
 			rb.constraints = RigidbodyConstraints.FreezePositionZ;
 			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
-			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
-			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
-			if (_beCW > _beCCW)
+			if (_isCW == 0)
 			{
-				_isCW = 1;
-			}
-			else if (_beCW < _beCCW)
-			{
-				_isCW = -1;
-			}
-			else //Equal distance from player
-			{
-				if (Random.value > 0.5)
+				int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
+				int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
+				if (_beCW > _beCCW)
 				{
 					_isCW = 1;
 				}
-				else
+				else if (_beCW < _beCCW)
 				{
 					_isCW = -1;
 				}
-			}	
+				else //Equal distance from player
+				{
+					if (Random.value > 0.5)
+					{
+						_isCW = 1;
+					}
+					else
+					{
+						_isCW = -1;
+					}
+				}
+			}
 			//Move (_isCW);
 			thisMapLine.UpdateMovement (transform.position, Time.deltaTime * _isCW * movementForce * 0.2f, out newPos, out newMapLine);
 			rb.MovePosition (new Vector3(newPos.x, newPos.y, 0));
@@ -160,11 +163,17 @@ public class Flipper : MonoBehaviour, IShipBase
 		gameObject.SetActive (false); // Disable enemy
 	}
 
-	void OnCollisionEnter(Collision collider)
-	//void onTriggerEnter(Collision collider)
+	//void OnCollisionEnter(Collision collider) {
+	void onTriggerEnter(Collider other)
 	{
+		/*
 		if (collider.gameObject.GetComponent<PlayerShip> ()) {
 			collider.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
+			OnDeath ();
+		}
+		*/
+		if (other.GetType() == typeof(PlayerShip)) {
+			other.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
 			OnDeath ();
 		}
 	}
