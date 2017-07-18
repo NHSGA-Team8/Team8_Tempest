@@ -17,6 +17,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	public GameObject flipperEnemy;
 	public float respawnTime;
 	public MapLine thisMapLine;
+	public string inputAxis = "Horizontal";
 
 	//Private
 	private float _currentHealth;
@@ -29,12 +30,14 @@ public class Flipper : MonoBehaviour, IShipBase
 	private Vector3 _vertex2;
 	private Vector3 _lineCenter;
 	private float _mapDepth;
+	private float _inputValue;
+	private 
 
 	Rigidbody rb;
 	//Audio
-	AudioSource flipperSounds;
-	AudioClip flipperShooting;
-	AudioClip flipperExplosion;
+	public AudioSource flipperSounds;
+	public AudioClip flipperShooting;
+	public AudioClip flipperExplosion;
 
 	// Use this for initialization
 	void Start ()
@@ -81,6 +84,22 @@ public class Flipper : MonoBehaviour, IShipBase
 			//yield return new WaitForSeconds (respawnTime);
 		}
 		*/
+		if (rb.position.z == 0) //In case the player ship is flying in after respawning?
+		{
+			bool isCW; //isClockWise
+			_inputValue = Input.GetAxis (inputAxis);
+			Move ();
+		}
+	}
+	void Move(){
+		Vector3 newPos;
+		MapLine newMapLine;
+		thisMapLine.UpdateMovement (transform.position, Time.deltaTime * Input.GetAxis (inputAxis) * movementForce, out newPos, out newMapLine);
+		rb.MovePosition (newPos);
+		if (newMapLine != null)
+		{
+			thisMapLine = newMapLine;
+		}
 	}
 
 	/*
@@ -114,7 +133,6 @@ public class Flipper : MonoBehaviour, IShipBase
 			collision.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
 		}
 	}
-
 
 	public bool GetStraightMovement()
 	{
