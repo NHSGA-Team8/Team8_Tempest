@@ -148,6 +148,7 @@ public class GameManager : MonoBehaviour {
 		thisMapLine = _mapManager.mapLines [_rand1];
 		_mapDepth = _mapManager.depth;
 		GameObject newFlipper = Instantiate (flipperPrefab, thisMapLine.GetMidPoint() + new Vector3 (0, 0, 1 * _mapDepth), flipperPrefab.transform.rotation);
+		newFlipper.GetComponent<Flipper>().SetMapLine (thisMapLine);
 	}
 
 	bool EnemiesAtEdge() {
