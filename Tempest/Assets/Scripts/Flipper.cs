@@ -65,7 +65,24 @@ public class Flipper : MonoBehaviour, IShipBase
 	// Update is called once per frame
 	void Update ()
 	{
-		if (_straightMovement)
+		if (rb.position.z == 0) //In case the player ship is flying in after respawning?
+		{
+			rb.constraints = RigidbodyConstraints.FreezePositionZ;
+			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
+			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
+			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
+			if (_beCW >= _beCCW)
+			{
+				_isCW = 1;
+			}
+			else
+			{
+				_isCW = -1;
+			}
+			//_inputValue = Input.GetAxis (inputAxis);
+			Move (_isCW);
+		}
+		else if (_straightMovement)
 		{
 			//Only move in Z direction, aka depth
 			//rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
@@ -85,23 +102,6 @@ public class Flipper : MonoBehaviour, IShipBase
 			//yield return new WaitForSeconds (respawnTime);
 		}
 		*/
-		if (rb.position.z == 0) //In case the player ship is flying in after respawning?
-		{
-			rb.constraints = RigidbodyConstraints.FreezePositionZ;
-			_currPlayerNum = GameObject.Find ("Player").GetComponent<PlayerShip> ().curMapLine.GetLineNum ();
-			int _beCW = _currPlayerNum - thisMapLine.GetLineNum ();
-			int _beCCW = _mapManager.mapLines.Length - _currPlayerNum + thisMapLine.GetLineNum ();
-			if (_beCW >= _beCCW)
-			{
-				_isCW = 1;
-			}
-			else
-			{
-				_isCW = -1;
-			}
-			//_inputValue = Input.GetAxis (inputAxis);
-			Move (_isCW);
-		}
 	}
 	void Move(int dir){
 		Vector3 newPos;
