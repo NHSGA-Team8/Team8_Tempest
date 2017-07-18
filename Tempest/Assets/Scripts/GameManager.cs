@@ -17,9 +17,13 @@ public class GameManager : MonoBehaviour {
 	public int currentRound;
 	public int nextScene;
 	public int totalLives;
+	public Camera camera;
 
 	public Canvas uiCanvas;
 	public Text notification;
+
+	public AudioClip ac_portalEnter;
+	public AudioClip ac_portalDuring;
 
 	public GameObject flipperShell; //Enemy Projectile
 
@@ -34,6 +38,7 @@ public class GameManager : MonoBehaviour {
 	private float _startTime;
 	private GameObject _playerRef;
 	private MapManager _mapManager;
+	private AudioSource _audioSource;
 
 	// Use this for initialization
 	void Start () {
@@ -41,8 +46,9 @@ public class GameManager : MonoBehaviour {
 		flippers = new Flipper[totalFlippers];
 		_mapManager = GameObject.Find ("MapManager").GetComponent<MapManager> ();
 		_playerRef = GameObject.Find ("Player");
-
+		_audioSource = camera.GetComponent<AudioSource> ();
 		StartCoroutine (GameLoop ());
+		_flipperCount = 0;
 	}
 	
 	// Update is called once per frame
@@ -80,13 +86,16 @@ public class GameManager : MonoBehaviour {
 
 	private IEnumerator RoundPlaying() {
 
-		while (curLives >= 0 && EnemiesAtEdge() == false)
+		while (curLives >= 0 && EnemiesAtEdge() == false && _flipperCount < totalFlippers)
 			yield return null;
 	}
 
 	private IEnumerator RoundEnding() {
 		//print ("RoundEnding");
 		SetEndMessage();
+		if (curLives >= 0) {
+			_playerRef.GetComponent<PlayerShip> ().movingForward = true;
+		}
 		yield return new WaitForSeconds(3);
 	}
 
@@ -117,6 +126,7 @@ public class GameManager : MonoBehaviour {
 	{
 		for (int i = 0; i < totalFlippers; i++)
 		{
+			_flipperCount++;
 			CreateNew ();
 			yield return new WaitForSeconds (spawnDelay);
 		}

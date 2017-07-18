@@ -21,6 +21,8 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	public AudioClip soundDeath;
 	public AudioClip soundZapper;
 
+	[HideInInspector] public bool movingForward = false;
+
 	// References to the MapManager and GameManager
 	private MapManager _mapManager;
 	private GameManager _gameManager;
@@ -82,6 +84,10 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 		Quaternion newQuat;
 
 		curMapLine.UpdateMovement (transform.position, Time.deltaTime * _inputValue * moveSpeed, out newPos, out newMapLine);
+
+		if (movingForward == true) {
+			newPos = newPos + new Vector3 (0f, 0f, transform.position.z + moveSpeed * 0.02f);
+		}
 
 		_rigidbody.MovePosition (newPos);
 
