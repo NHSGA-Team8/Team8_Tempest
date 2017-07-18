@@ -15,6 +15,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	public int maxBullets = 7;
 	public float fireCooldown = 0.2f;
 	public MapLine curMapLine;
+	public GameObject explodePrefab;
 
 	public AudioClip soundFire;
 	public AudioClip soundDeath;
@@ -31,6 +32,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	private Rigidbody _rigidbody;
 	private float _godTimer;
 	private AudioSource _audioSource;
+	private bool _zapperReady;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +42,7 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 		_gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 		_godTimer = Time.fixedTime + 3;
 		_audioSource = GetComponent<AudioSource> ();
+		_zapperReady = true;
 	}
 
 	void OnEnable() {
@@ -65,6 +68,11 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 			Fire ();
 			_lastFire = Time.fixedTime;
 		}
+
+		if (Input.GetKey (KeyCode.LeftControl) && _zapperReady == true) {
+			Zapper ();
+			_zapperReady = false;
+		}
 	}
 
 	// Called each update to move sideways
@@ -85,10 +93,20 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 	// Called to fire a projectile.
 	public void Fire(){
 		_curBullets++;
-
+		_audioSource.clip = soundFire;
+		_audioSource.Play ();
 		Rigidbody shellInstance = Instantiate (bullet, fireTransform.position, fireTransform.rotation) as Rigidbody;
 		shellInstance.GetComponent<PlayerBullet> ().SetShip (gameObject);
 		shellInstance.velocity = 10f * (fireTransform.forward); 
+	}
+
+	void Zapper() {
+		_audioSource.clip = soundZapper;
+		_audioSource.Play ();
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enemy in enemies) {
+			enemy.GetComponent<Flipper> ().TakeDamage (10);
+		}
 	}
 
 	// Called when a projectile damages the ship. Should call OnDeath() if it kills;
@@ -105,6 +123,11 @@ public class PlayerShip : MonoBehaviour, IShipBase {
 
 	// Called when the ship dies. Add points, do game state detection, etc.
 	public void OnDeath(){
+		GameObject newExplosion = Instantiate (explodePrefab, gameObject.transform.position, gameObject.transform.rotation);
+		AudioSource explosionSource = newExplosion.GetComponent<AudioSource> ();
+		explosionSource.clip = soundDeath;
+		explosionSource.Play ();
+		Destroy (newExplosion, 3f);
 		gameObject.SetActive (false);
 		_gameManager.OnPlayerDeath ();
 	}
