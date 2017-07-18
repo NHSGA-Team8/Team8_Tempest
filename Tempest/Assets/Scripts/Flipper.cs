@@ -18,6 +18,7 @@ public class Flipper : MonoBehaviour, IShipBase
 	public float respawnTime;
 	public MapLine thisMapLine;
 	public string inputAxis = "Horizontal";
+	public GameObject explodePrefab;
 
 	//Private
 	private float _currentHealth;
@@ -33,12 +34,12 @@ public class Flipper : MonoBehaviour, IShipBase
 	private float _inputValue;
 	private int _isCW; //isClockWise: 1 = CW
 	private int _currPlayerNum;
+	private AudioSource _audioSource;
 
 	Rigidbody rb;
 	//Audio
-	public AudioSource flipperSounds;
-	public AudioClip flipperShooting;
-	public AudioClip flipperExplosion;
+	public AudioClip soundFire;
+	public AudioClip soundDeath;
 
 	// Use this for initialization
 	void Start ()
@@ -49,7 +50,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		//_rand = Random.value * _mapManager.mapVertices.Length;
 		//_rand = RandomVal ();
 		//print(Console.WriteLine(MapManager.mapVertices[1]));
-
+		_audioSource = GetComponent<AudioSource> ();
 		_mapManager = GameObject.Find("MapManager").GetComponent<MapManager> ();
 
 		if (levelNum == 1)
@@ -113,6 +114,10 @@ public class Flipper : MonoBehaviour, IShipBase
 	// Called when the ship dies. Add points, do game state detection, etc.
 	public void OnDeath()
 	{
+		GameObject newExplosion = Instantiate (explodePrefab, gameObject.transform.position, gameObject.transform.rotation);
+		AudioSource explosionSource = newExplosion.GetComponent<AudioSource> ();
+		explosionSource.clip = soundDeath;
+		explosionSource.Play ();
 		gameObject.SetActive (false); // Disable enemy
 	}
 
@@ -120,7 +125,7 @@ public class Flipper : MonoBehaviour, IShipBase
 		if (collider.gameObject.GetComponent<PlayerShip> ()) {
 			
 			collider.gameObject.GetComponent<PlayerShip> ().TakeDamage (1);
-			Destroy (gameObject);
+			OnDeath ();
 		}
 	}
 
